@@ -31,7 +31,7 @@ def main():
     c.execute('SELECT todo_id, todo_description FROM todo ')
     result = c.fetchall()
     #resultFinal = [i for i in result]
-    print(result)
+    print( ", ".join( repr(e) for e in result ) )
     print("""
     1. Take a note
     2. Delete a note
