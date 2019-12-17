@@ -1,7 +1,10 @@
+#TODO Date needs to be localdate
+
 import sys
 import sqlite3
 import os
 from time import sleep
+from datetime import date
 
 #Menu
 #Check for DB
@@ -20,7 +23,7 @@ def dbCreate():
     conn = sqlite3.connect('notes.db')
     c = conn.cursor()  
     c.execute('''CREATE TABLE todo
-    (todo_id INTEGER PRIMARY KEY, todo_description varchar(250) NOT NULL)''')
+    (todo_id INTEGER PRIMARY KEY, todo_description varchar(250) NOT NULL, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
     conn.commit()
     conn.close()
 
@@ -28,10 +31,10 @@ def dbCreate():
 def showNote():
     conn = sqlite3.connect('notes.db')
     c = conn.cursor()  
-    c.execute('SELECT todo_id, todo_description FROM todo ')
+    c.execute('SELECT todo_id, todo_description, Timestamp  FROM todo ')
     result = c.fetchall()
-    print( "\n".join( repr(e) for e in result ) )
-    input("Press [Enter] to go back to the menu")
+    print( "\n \n".join( repr(e) for e in result ) )
+    input("\nPress [Enter] to go back to the menu")
     main()
 
 #Take an input, Save that input to a list
@@ -65,7 +68,7 @@ def main():
     os.system('clear')
     conn = sqlite3.connect('notes.db')
     c = conn.cursor()  
-    c.execute('SELECT todo_id, todo_description FROM todo ')
+    c.execute('SELECT todo_id, todo_description FROM todo ORDER BY Timestamp DESC ')
     result = c.fetchall()
     #resultFinal = [i for i in result]
     print("""
@@ -75,12 +78,12 @@ def main():
     | |/ _ \/ __| '_ \ / _` |/ _ \ \/ /    | |/ _ \| |  | |/ _ \ 
     | |  __| (__| | | | (_| | (_) >  <     | | (_) | |__| | (_) |
     |_|\___|\___|_| |_|\__,_|\___/_/\_\    |_|\___/|_____/ \___/ 
+                             version 1.0           
                                                                  
-                                                                 
-                            1. Take a note
-                            2. Delete a note
-                            3. Show Notes
-                            4. Exit
+1. Take a note
+2. Delete a note
+3. Show Notes
+4. Exit
     """)
     choice = input("")
     if choice == '1':
