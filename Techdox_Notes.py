@@ -51,7 +51,6 @@ def deleteNote():
     conn = sqlite3.connect('notes.db')
     c = conn.cursor()  
     idDel = input("Enter task ID to delete")
-
     try:
         c.execute(f"DELETE FROM todo WHERE todo_id={idDel}")
     except sqlite3.OperationalError:
@@ -63,6 +62,7 @@ def deleteNote():
 
 def main():
     dbCheck()
+    os.system('clear')
     conn = sqlite3.connect('notes.db')
     c = conn.cursor()  
     c.execute('SELECT todo_id, todo_description FROM todo ')
