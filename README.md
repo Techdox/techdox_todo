@@ -1,2 +1,4 @@
 # techdox_todo
-Track tasks with this simple CLI tool.
+This tool allows you to keep a track of tasks you want to complete. 
+
+It is best to have this application as a alias so you can easily call it when needed.
