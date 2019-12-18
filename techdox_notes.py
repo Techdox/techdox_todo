@@ -5,22 +5,23 @@ import sqlite3
 import os
 from time import sleep
 from datetime import date
-
+appPath = os.path.dirname(os.path.abspath( __file__ ))
+dbPath = os.path.join(appPath, 'notes.db')
 #Menu
 #Check for DB
 def dbCheck():
-    if os.path.isfile('notes.db') == False:
+    if os.path.isfile(dbPath) == False:
         dbChoice = input("Database notes.db was not found, would you like to create a new Database? [Y],[N]").lower()
         if dbChoice == 'y':
             dbCreate()
         elif dbChoice == 'n':
             exit(0)
-    elif os.path.isfile('notes.db') == True:
+    elif os.path.isfile(dbPath) == True:
         #print("Database was found...")
         return 
 
 def dbCreate():
-    conn = sqlite3.connect('notes.db')
+    conn = sqlite3.connect(appPath)
     c = conn.cursor()  
     c.execute('''CREATE TABLE todo
     (todo_id INTEGER PRIMARY KEY, todo_description varchar(250) NOT NULL, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
@@ -29,7 +30,7 @@ def dbCreate():
 
 
 def showNote():
-    conn = sqlite3.connect('notes.db')
+    conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
     c.execute('SELECT todo_id, todo_description, Timestamp  FROM todo ')
     result = c.fetchall()
@@ -39,7 +40,7 @@ def showNote():
 
 #Take an input, Save that input to a list
 def createNote():
-    conn = sqlite3.connect('notes.db')
+    conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
     newNote = input("Enter your Note: ")
     print(f'Added {newNote} to Database')
@@ -51,7 +52,7 @@ def createNote():
 
 #Delete note
 def deleteNote():
-    conn = sqlite3.connect('notes.db')
+    conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
     idDel = input("Enter task ID to delete")
     try:
@@ -66,7 +67,7 @@ def deleteNote():
 def main():
     dbCheck()
     os.system('clear')
-    conn = sqlite3.connect('notes.db')
+    conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
     c.execute('SELECT todo_id, todo_description FROM todo ORDER BY Timestamp DESC ')
     result = c.fetchall()
