@@ -21,7 +21,7 @@ def dbCheck():
         return 
 
 def dbCreate():
-    conn = sqlite3.connect(appPath)
+    conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
     c.execute('''CREATE TABLE todo
     (todo_id INTEGER PRIMARY KEY, todo_description varchar(250) NOT NULL, Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)''')
