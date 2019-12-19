@@ -34,7 +34,7 @@ def showNote():
     c = conn.cursor()  
     c.execute('SELECT todo_id, todo_description, Timestamp  FROM todo ')
     result = c.fetchall()
-    print( "\n \n".join( repr(e) for e in result ) )
+    print( "\n \n".join( repr(e) for e in result ))
     input("\nPress [Enter] to go back to the menu")
     main()
 
@@ -54,11 +54,13 @@ def createNote():
 def deleteNote():
     conn = sqlite3.connect(dbPath)
     c = conn.cursor()  
-    idDel = input("Enter task ID to delete")
+    c.execute('SELECT todo_id, todo_description, Timestamp  FROM todo ')
+    result = c.fetchall()
+    print( "\n \n".join( repr(e) for e in result ))
+    idDel = input("\nEnter task ID to delete, or press [Enter] to quit back to menu: ")
     try:
         c.execute(f"DELETE FROM todo WHERE todo_id={idDel}")
     except sqlite3.OperationalError:
-        input("Whoops, something went wrong. Press [Enter] to return to the menu")
         main()
     conn.commit()
     conn.close()
@@ -79,7 +81,7 @@ def main():
     | |/ _ \/ __| '_ \ / _` |/ _ \ \/ /    | |/ _ \| |  | |/ _ \ 
     | |  __| (__| | | | (_| | (_) >  <     | | (_) | |__| | (_) |
     |_|\___|\___|_| |_|\__,_|\___/_/\_\    |_|\___/|_____/ \___/ 
-                             version 1.0.1           
+                             version 1.0.2           
                                                                  
 1. Take a note
 2. Delete a note
